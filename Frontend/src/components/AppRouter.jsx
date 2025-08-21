@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         element: <PostPage />,
         loader: async () => {
           try {
-            const res = await axios.get("http://localhost:3000/posts");
+            const res = await axios.get("https://post-creation-ivck.onrender.com/posts");
             return res.data.data;
           } catch (error) {
             console.error(error);

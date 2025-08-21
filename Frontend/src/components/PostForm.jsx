@@ -22,7 +22,7 @@ const PostForm = () => {
       formData.append("image", data.image[0]);
       formData.append("caption", data.caption);
 
-      const res = await axios.post("http://localhost:3000/posts", formData, {
+      const res = await axios.post("https://post-creation-ivck.onrender.com/posts", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
