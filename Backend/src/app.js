@@ -8,7 +8,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 const app = express();
 app.use(
   cors({
-    origin: "https://post-creation-rho.vercel.app/",
+    origin: "https://post-creation-rho.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   })
