@@ -6,14 +6,22 @@ const cors = require("cors");
 
 const upload = multer({ storage: multer.memoryStorage() });
 const app = express();
+const allowedOrigins = [ 
+  "https://post-creation-rho.vercel.app" 
+];
+
 app.use(
   cors({
-    origin: "https://post-creation-rho.vercel.app",
-    methods: ["GET", "POST"],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
-
 app.use(express.json());
 
 app.post("/posts", upload.single("image"), async (req, res) => {

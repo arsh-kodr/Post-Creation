@@ -19,11 +19,11 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/creation",
+        path: "creation",
         element: <PostForm />,
       },
       {
-        path: "/post",
+        path: "post",
         element: <PostPage />,
         loader: async () => {
           try {
