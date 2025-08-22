@@ -1,40 +1,52 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
+import { Home, PlusSquare, Images } from "lucide-react";
 
 const Navbar = () => {
   return (
-    <div className="w-screen h-14 bg-amber-200 flex justify-center items-center gap-4 shadow-md">
+    <nav className="w-screen h-16 bg-gray-900 text-gray-100 flex justify-center items-center gap-10 shadow-lg border-b border-gray-700">
       <NavLink
-        className={({ isActive }) =>
-          isActive
-            ? "font-bold text-red-500 hover:border-b-2 border-red-500"
-            : "hover:border-b-2 border-red-500"
-        }
         to="/"
+        className={({ isActive }) =>
+          `flex items-center gap-2 px-3 py-2 rounded-md transition ${
+            isActive
+              ? "text-indigo-400 font-semibold bg-gray-800"
+              : "hover:text-indigo-300 hover:bg-gray-800"
+          }`
+        }
       >
+        <Home className="w-5 h-5" />
         Home
       </NavLink>
+
       <NavLink
-        className={({ isActive }) =>
-          isActive
-            ? "font-bold text-red-500 hover:border-b-2 border-red-500"
-            : "hover:border-b-2 border-red-500"
-        }
         to="/creation"
+        className={({ isActive }) =>
+          `flex items-center gap-2 px-3 py-2 rounded-md transition ${
+            isActive
+              ? "text-indigo-400 font-semibold bg-gray-800"
+              : "hover:text-indigo-300 hover:bg-gray-800"
+          }`
+        }
       >
+        <PlusSquare className="w-5 h-5" />
         Post Creation
       </NavLink>
+
       <NavLink
-        className={({ isActive }) =>
-          isActive
-            ? "font-bold text-red-500 hover:border-b-2 border-red-500"
-            : "hover:border-b-2 border-red-500"
-        }
         to="/post"
+        className={({ isActive }) =>
+          `flex items-center gap-2 px-3 py-2 rounded-md transition ${
+            isActive
+              ? "text-indigo-400 font-semibold bg-gray-800"
+              : "hover:text-indigo-300 hover:bg-gray-800"
+          }`
+        }
       >
+        <Images className="w-5 h-5" />
         View Posts
       </NavLink>
-    </div>
+    </nav>
   );
 };
 

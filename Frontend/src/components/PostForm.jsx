@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { ImagePlus, Loader2 } from "lucide-react";
 
 const PostForm = () => {
   const {
@@ -13,7 +14,6 @@ const PostForm = () => {
   } = useForm();
 
   const [preview, setPreview] = useState(null);
-
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -22,13 +22,13 @@ const PostForm = () => {
       formData.append("image", data.image[0]);
       formData.append("caption", data.caption);
 
-      const res = await axios.post("https://post-creation-ivck.onrender.com/posts", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log(res.data);
+      const res = await axios.post(
+        "https://post-creation-ivck.onrender.com/posts",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       toast.success("Post created successfully!");
       reset();
@@ -41,26 +41,36 @@ const PostForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+    <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-br from-gray-900 to-black">
+      <div className="w-full max-w-md bg-gray-800 text-gray-100 rounded-2xl shadow-2xl p-8">
+        <h2 className="text-3xl font-bold text-center mb-6 tracking-wide">
           Create New Post
         </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block text-gray-300 font-medium mb-2">
               Upload Image
             </label>
-            <input
-              type="file"
-              accept="image/*"
-              {...register("image", { required: "Image is required" })}
-              onChange={(e) =>
-                setPreview(URL.createObjectURL(e.target.files[0]))
-              }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+            <div className="flex items-center justify-center w-full">
+              <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-xl cursor-pointer bg-gray-700 border-gray-600 hover:border-indigo-500 transition">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <ImagePlus className="w-10 h-10 text-gray-400 mb-2" />
+                  <p className="text-sm text-gray-400">
+                    Click to upload or drag & drop
+                  </p>
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  {...register("image", { required: "Image is required" })}
+                  onChange={(e) =>
+                    setPreview(URL.createObjectURL(e.target.files[0]))
+                  }
+                  className="hidden"
+                />
+              </label>
+            </div>
             {errors.image && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.image.message}
@@ -70,13 +80,13 @@ const PostForm = () => {
               <img
                 src={preview}
                 alt="Preview"
-                className="mt-3 rounded-lg shadow-md max-h-48 object-cover w-full"
+                className="mt-4 rounded-xl shadow-lg max-h-52 object-cover w-full"
               />
             )}
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block text-gray-300 font-medium mb-2">
               Caption
             </label>
             <textarea
@@ -88,8 +98,8 @@ const PostForm = () => {
                 },
               })}
               rows="3"
-              placeholder="Write your caption..."
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Write something meaningful..."
+              className="w-full bg-gray-700 text-gray-100 border border-gray-600 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             ></textarea>
             {errors.caption && (
               <p className="text-red-500 text-sm mt-1">
@@ -101,9 +111,15 @@ const PostForm = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg shadow-md transition disabled:opacity-60"
+            className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg shadow-md transition disabled:opacity-60"
           >
-            {isSubmitting ? "Uploading..." : "Create Post"}
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" /> Uploading...
+              </>
+            ) : (
+              "Create Post"
+            )}
           </button>
         </form>
       </div>
