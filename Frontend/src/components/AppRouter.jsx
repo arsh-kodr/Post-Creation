@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
+import { RouterProvider } from "react-router";
 import Layout from "./Layout";
 import HomePage from "../pages/HomePage";
 import PostForm from "./PostForm";
