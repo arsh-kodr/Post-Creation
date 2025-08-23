@@ -3,9 +3,11 @@ const multer = require("multer");
 const { uploadfile, deletefile } = require("./services/storage.service");
 const postModel = require("./models/post.model");
 const cors = require("cors");
+const path = require("path");
 
 const upload = multer({ storage: multer.memoryStorage() });
 const app = express();
+app.use(express.static("public"));
 const allowedOrigins = [ 
   "https://post-creation-rho.vercel.app" 
 ];
@@ -84,5 +86,9 @@ app.delete("/posts/:id", async (req, res) => {
     data: post,
   });
 });
+
+app.get("*name" , (req , res) => {
+   res.sendFile(path.join(__dirname ,".." ,"public/index.html"))
+})
 
 module.exports = app;
